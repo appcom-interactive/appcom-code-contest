@@ -3,7 +3,7 @@ const chiffre = {
         ERSTE AUFGABE:
 
         Hier mal eine eigene Struktur überlegen, 
-        wie man das am besten in einem Array ODER Object abbildet :)
+        wie man die Datenstruktur am besten abbildet. Alles ist erlaubt :)
 
         Auch wenn der Polybios-Chiffre eigentlich aus zufällig zusammen-
         gewürfelten Buchstaben besteht, würde ich hier sagen, bleiben wir
