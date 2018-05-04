@@ -9,29 +9,43 @@ const chiffre = [
 module.exports = {
   encrypt(value) {
     const valueArray = value.split("");
-    let encryptetValue = "";
+    let mappingList = {};
 
-    const findCoords = char => {
-      let result = "";
-      chiffre.map((element, y) => {
-          // :) naja ich versuche es noch raffinierter
-        if (char === "J" || char === "I") {
-          result = "24 ";
-        }
-        if (element.indexOf(char) !== -1) {
-          let x = element.indexOf(char);
-          y = y + 1;
-          x = x + 1;
-          result = y.toString() + x.toString() + " ";
-        }
+    // erstellt ein Objekt mit den Zuordnungen
+    const createMappingList = chiffre => {
+      chiffre.map((rows, y) => {
+        rows.map((cols, x) => {
+          // prüft ob non ALPHA CHARS vorhanden sind und und entfernt diese
+          // dies könnte als eigene Funktion ausgelagert werden sanitizeMappingList() oä
+          const pattern = new RegExp("[^A-Z]");
+          if (pattern.test(chiffre[y][x])) {
+            // wenn non alpha char dann entferne und teile die verbleibenden chars auf
+            chiffre[y][x].replace(/[^A-Z]+/gi, "").split("");
+            const sonderlinge = chiffre[y][x]
+              .replace(/[^A-Z]+/gi, "")
+              .split("");
+            sonderlinge.map(sonderling => {
+              mappingList[sonderling] = (y + 1).toString() + (x + 1).toString();
+            });
+          } else {
+            mappingList[chiffre[y][x]] =
+              (y + 1).toString() + (x + 1).toString();
+          }
+        });
       });
-      return result;
     };
 
-    valueArray.map(char => {
-      encryptetValue += findCoords(char);
-    });
+    createMappingList(chiffre);
 
-    return encryptetValue.trim();
+    // Erstellt verschlüsselte Nachricht
+    const createEncryptedMessage = () => {
+      let message = "";
+      valueArray.map(char => {
+        message += mappingList[char] + " ";
+      });
+      return message.trim();
+    };
+
+    return createEncryptedMessage();
   }
 };
