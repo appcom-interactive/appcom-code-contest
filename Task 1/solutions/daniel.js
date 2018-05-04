@@ -8,39 +8,50 @@ const chiffre = [
 
 module.exports = {
   encrypt(value) {
-    const valueArray = value.split("");
+    const onlyChars = new RegExp("[^A-Z]");
     let mappingList = {};
 
-    // erstellt ein Objekt mit den Zuordnungen
+    /**
+     * Methode zum prüfen von Sonderfällen in der mappingList
+     * und versucht diese zu korrigieren
+     *
+     * @param {*} item
+     * @param {*} x
+     * @param {*} y
+     */
+    const sanitizeMappingList = (item, x, y) => {
+      if (onlyChars.test(item)) {
+        item.replace(onlyChars, "").split("");
+        const sonderlinge = item.replace(onlyChars, "").split("");
+        sonderlinge.map(sonderling => {
+          mappingList[sonderling] = (y + 1).toString() + (x + 1).toString();
+        });
+      } else {
+        mappingList[chiffre[y][x]] = (y + 1).toString() + (x + 1).toString();
+      }
+    };
+
+    /**
+     * erstellt ein Objekt mit den Zuordnungen
+     *
+     * @param {*} chiffre
+     */
     const createMappingList = chiffre => {
       chiffre.map((rows, y) => {
         rows.map((cols, x) => {
-          // prüft ob non ALPHA CHARS vorhanden sind und und entfernt diese
-          // dies könnte als eigene Funktion ausgelagert werden sanitizeMappingList() oä
-          const pattern = new RegExp("[^A-Z]");
-          if (pattern.test(chiffre[y][x])) {
-            // wenn non alpha char dann entferne und teile die verbleibenden chars auf
-            chiffre[y][x].replace(/[^A-Z]+/gi, "").split("");
-            const sonderlinge = chiffre[y][x]
-              .replace(/[^A-Z]+/gi, "")
-              .split("");
-            sonderlinge.map(sonderling => {
-              mappingList[sonderling] = (y + 1).toString() + (x + 1).toString();
-            });
-          } else {
-            mappingList[chiffre[y][x]] =
-              (y + 1).toString() + (x + 1).toString();
-          }
+          sanitizeMappingList(chiffre[y][x], x, y);
         });
       });
     };
 
     createMappingList(chiffre);
 
-    // Erstellt verschlüsselte Nachricht
+    /**
+     * Erstellt die verschlüsselte Nachricht
+     */
     const createEncryptedMessage = () => {
       let message = "";
-      valueArray.map(char => {
+      value.split("").map(char => {
         message += mappingList[char] + " ";
       });
       return message.trim();
