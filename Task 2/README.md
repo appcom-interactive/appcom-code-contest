@@ -1,4 +1,4 @@
-# Der Polybios Chiffre
+# Random Substitution Chiffre
 
 https://de.wikipedia.org/wiki/Substitution_(Kryptographie)
 https://de.wikipedia.org/wiki/Alphabet_(Kryptologie)
