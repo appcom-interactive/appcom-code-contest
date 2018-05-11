@@ -1,5 +1,5 @@
 // Replace `template` with your own solution
-const substitution = require('./solutions/template');
+const substitution = require('./solutions/rene');
 
 var mocha = require('mocha');
 var describe = mocha.describe;
@@ -13,7 +13,7 @@ describe('your substitution solution', () => {
   });
 
   it('should return the decrypted value for abCDefgh', () => {
-    expect(substitution.decrypt('abCDefgh', 2)).to.eq('76QRdet2');
+    expect(substitution.decrypt('abCDefgh', 2)).to.eq('76QDret2');
   });
 
   it('should return the decrypted value for appCoM', () => {
