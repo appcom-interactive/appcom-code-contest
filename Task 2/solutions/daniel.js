@@ -115,10 +115,15 @@ module.exports = {
     const isUpperCase = /[A-Z]/;
     let result = "";
 
-    value.split("").forEach((char, index) => {
-      result += isUpperCase.test(char)
-        ? mapping[1][index].toUpperCase()
-        : mapping[1][index].toLowerCase();
+    value.split("").forEach(char => {
+      const indexOfChar = mapping[0].indexOf(char.toLowerCase());
+      if (indexOfChar > -1) {
+        result += isUpperCase.test(char)
+          ? mapping[1][indexOfChar].toUpperCase()
+          : mapping[1][indexOfChar].toLowerCase();
+      } else {
+        result += char;
+      }
     });
 
     return result;
