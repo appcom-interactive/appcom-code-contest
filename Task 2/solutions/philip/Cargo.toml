@@ -1,0 +1,9 @@
+[package]
+name = "philip"
+version = "0.1.0"
+authors = ["Philip Stapelfeldt <p.stapelfeldt@appcom-interactive.de>"]
+
+[dependencies]
+
+# [lib]
+# crate-type = ["cdylib"]

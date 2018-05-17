@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <script>
+            // This is read and used by `site.js`
+            var Module = {
+                wasmBinaryFile: "philip.wasm",
+                onRuntimeInitialized: main,
+            };
+            function main(m) {
+                console.log(Module);
+                var decrypt = Module.cwrap('decrypt', 'string', ['string', 'number']);
+                console.log(decrypt(str, 1));
+            }
+        </script>
+        <script src="philip.js"></script>
+    </body>
+</html>
