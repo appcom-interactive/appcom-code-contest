@@ -1,0 +1,16 @@
+[ignore]
+test.js
+node_modules
+solutions/**/*.*
+
+[include]
+src/**/*.*
+
+[libs]
+
+[lints]
+
+[options]
+emoji=true
+
+[strict]
