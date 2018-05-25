@@ -20,7 +20,7 @@ files.forEach(({
 }) => {
     describe(`${name} solution`, () => {
         it('should return the decrypted value of a,b,c,d,e', () => {
-            expect(impl.split('a,b,c,d,e', ',')).to.eq(['a', 'b', 'c', 'd', 'e']);
+            expect(impl.split('a,b,c,d,e', ',')).to.deep.equal(['a', 'b', 'c', 'd', 'e']);
         });
 
         it('should return the splitted value of a;b;c;d;e', () => {
