@@ -24,44 +24,44 @@ files.forEach(({
         });
 
         it('should return the splitted value of a;b;c;d;e', () => {
-            expect(impl.split('a;b;c;d;e', ';')).to.eq(['a', 'b', 'c', 'd', 'e']);
+            expect(impl.split('a;b;c;d;e', ';')).to.deep.eq(['a', 'b', 'c', 'd', 'e']);
         });
 
         it('should return the splitted value of Hello World!', () => {
-            expect(impl.split('Hello World!', ' ')).to.eq(['Hello', 'World!']);
+            expect(impl.split('Hello World!', ' ')).to.deep.eq(['Hello', 'World!']);
         });
 
         it('should return the splitted value of This is a longer sentence.', () => {
-            expect(impl.split('This is a longer sentence.', '.')).to.eq(['This is a longer sentence', '']);
-            expect(impl.split('This is a longer sentence.', ' ')).to.eq(['This', 'is', 'a', 'longer', 'sentence.']);
+            expect(impl.split('This is a longer sentence.', '.')).to.deep.eq(['This is a longer sentence', '']);
+            expect(impl.split('This is a longer sentence.', ' ')).to.deep.eq(['This', 'is', 'a', 'longer', 'sentence.']);
         });
 
         it('should return an empty array', () => {
-            expect(impl.split(null, '.')).to.eq([]);
-            expect(impl.split(null, null)).to.eq([]);
-            expect(impl.split(null)).to.eq([]);
+            expect(impl.split(null, '.')).to.deep.eq([]);
+            expect(impl.split(null, null)).to.deep.eq([]);
+            expect(impl.split(null)).to.deep.eq([]);
 
-            expect(impl.split(undefined, '.')).to.eq([]);
-            expect(impl.split(undefined, undefined)).to.eq([]);
-            expect(impl.split(undefined)).to.eq([]);
+            expect(impl.split(undefined, '.')).to.deep.eq([]);
+            expect(impl.split(undefined, undefined)).to.deep.eq([]);
+            expect(impl.split(undefined)).to.deep.eq([]);
 
-            expect(impl.split('', '')).to.eq([]);
-            expect(impl.split('')).to.eq([]);
-            expect(impl.split()).to.eq([]);
-            expect(impl.split({})).to.eq([]);
+            expect(impl.split('', '')).to.deep.eq([]);
+            expect(impl.split('')).to.deep.eq([]);
+            expect(impl.split()).to.deep.eq([]);
+            expect(impl.split({})).to.deep.eq([]);
         });
 
         it('should return an array with input value', () => {
-            expect(impl.split('Hello World!', 3214)).to.eq(['Hello World!']);
-            expect(impl.split('Hello World!', null)).to.eq(['Hello World!']);
-            expect(impl.split('Hello World!', undefined)).to.eq(['Hello World!']);
+            expect(impl.split('Hello World!', 3214)).to.deep.eq(['Hello World!']);
+            expect(impl.split('Hello World!', null)).to.deep.eq(['Hello World!']);
+            expect(impl.split('Hello World!', undefined)).to.deep.eq(['Hello World!']);
         });
 
         it('should return the splitted value of {fkey: "one", skey: "two"}', () => {
             expect(impl.split({
                 fkey: 'one',
                 skey: 'two'
-            })).to.eq([{
+            })).to.deep.eq([{
                 fkey: 'one'
             }, {
                 skey: 'two'
