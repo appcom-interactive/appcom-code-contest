@@ -15,23 +15,7 @@
 */
 
 module.exports = {
-  split(value, seperator) {
-    if (seperator === null || value === null) {
-      return [];
+    split(value, seperator) {
+        return [];
     }
-    let erg = [];
-    let tmp = "";
-    Array.from(value).map((item, i) => {
-      if (item !== seperator) {
-        tmp += item;
-      } else {
-        erg.push(tmp);
-        tmp = "";
-      }
-      if (i === Array.from(value).length - 1) {
-        erg.push(tmp);
-      }
-    });
-    return erg;
-  }
 };

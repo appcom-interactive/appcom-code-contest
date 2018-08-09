@@ -4,19 +4,19 @@
   "description": "",
   "main": "solutions/template.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha",
-    "build": "babel src/ -d solutions/"
+    "test": "npm run build && mocha",
+    "build": "flow && babel src/ -d solutions/",
+    "dev": "nodemon --watch ./src -x 'npm run test'"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.1.1"
-  },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1",
     "babel-cli": "^6.26.0",
     "babel-preset-flow": "^6.23.0",
-    "flow-bin": "^0.72.0"
+    "flow-bin": "^0.72.0",
+    "nodemon": "^1.18.3"
   },
   "babel": {
     "presets": [
