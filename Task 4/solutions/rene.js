@@ -53,19 +53,11 @@ module.exports = {
     for (let i = 0; i < value.length; i++) {
       for (let j = 0; j < value[i].length; j++) {
         const player = value[i][j];
-        if (player !== null) {
-          if (player === 'A') {
-            playerAcoins++;
-          }
-          if (player === 'B') {
-            playerBcoins++;
-          }
-          if (player !== 'A' && player !== 'B') {
-            return 'Go away! Strange kid!';
-          }
-          if (i < value.length - 1 && value[i + 1][j] === null) {
-            return 'Cheater! Cheater! Cheater!';
-          }
+        if (player === 'A') {
+          playerAcoins++;
+        }
+        if (player === 'B') {
+          playerBcoins++;
         }
       }
     }
@@ -78,6 +70,13 @@ module.exports = {
         const player = value[i][j];
 
         if (player !== null) {
+          if (player !== 'A' && player !== 'B') {
+            return 'Go away! Strange kid!';
+          }
+          if (i < value.length - 1 && value[i + 1][j] === null) {
+            return 'Cheater! Cheater! Cheater!';
+          }
+
           if (
             checkHorizontal(value, i, j, player) ||
             checkVertical(value, i, j, player) ||
