@@ -46,12 +46,12 @@ module.exports = {
     }
 
     const reversed = board.reverse();
-    const player = reversed.reduce(
+    const winner = reversed.reduce(
       (result, row, y) =>
         row.find((coin, x) => coin && check(reversed, x, y, coin)) || result,
       undefined
     );
 
-    return player ? `Player ${player} wins!` : messages.cheater;
+    return winner ? `Player ${winner} wins!` : messages.cheater;
   }
 };
