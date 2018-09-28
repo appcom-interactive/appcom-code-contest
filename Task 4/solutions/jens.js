@@ -6,15 +6,10 @@ const validate = (row, coin) =>
     return count;
   }, 0) && coin;
 
-const check = (board, x, y, coin) => {
-  if (coin === null) return false;
-
-  return (
-    validate(board[y], coin) ||
-    validate(board.map(row => row[x]), coin) ||
-    diagonal(board.slice().splice(y), x, coin)
-  );
-};
+const check = (board, x, y, coin) =>
+  validate(board[y], coin) ||
+  validate(board.map(row => row[x]), coin) ||
+  diagonal(board.slice().splice(y), x, coin);
 
 const diagonal = (board, x, coin) => {
   const diagonal = board.reduce(
@@ -53,7 +48,7 @@ module.exports = {
     const reversed = board.reverse();
     const player = reversed.reduce(
       (result, row, y) =>
-        row.find((coin, x) => check(reversed, x, y, coin)) || result,
+        row.find((coin, x) => coin && check(reversed, x, y, coin)) || result,
       undefined
     );
 
