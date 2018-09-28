@@ -9,7 +9,7 @@ const validate = (row, coin) =>
 const check = (board, x, y, coin) =>
   validate(board[y], coin) ||
   validate(board.map(row => row[x]), coin) ||
-  diagonal(board.slice().splice(y), x, coin);
+  diagonal(board.slice(y), x, coin);
 
 const diagonal = (board, x, coin) => {
   const diagonal = board.reduce(
