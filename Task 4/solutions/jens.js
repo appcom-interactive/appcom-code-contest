@@ -4,7 +4,7 @@ const validate = (row, coin) =>
       value === coin ? count++ : (count = 0);
     }
     return count;
-  }, 0) && coin;
+  }, 0);
 
 const check = (board, x, y, coin) =>
   validate(board[y], coin) ||
