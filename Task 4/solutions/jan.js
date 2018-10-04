@@ -21,9 +21,9 @@ module.exports = {
       }
       const cheaterRegex = /[AB]X[AB]/;
       const playerRegex = /(A{4}|B{4})/;
-      const gameFieldTransponsed = gameFieldMtx[0].map((_, idx) => gameFieldMtx.map(row => row[idx]));
+      const gameFieldTransposed = gameFieldMtx[0].map((_, idx) => gameFieldMtx.map(row => row[idx]));
       let result;
-      gameFieldTransponsed.forEach(layer => {
+      gameFieldTransposed.forEach(layer => {
         const filledLayer = layer.map(e => !e ? 'X' : e).join('');
         if (cheaterRegex.test(filledLayer)) {
           throw 'Cheater! Cheater! Cheater!';
