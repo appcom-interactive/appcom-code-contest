@@ -50,7 +50,7 @@ module.exports = {
 
     let playerAcoins = 0;
     let playerBcoins = 0;
-    for (let i = 0; i < value.length; i++) {
+    for (let i = value.length - 1; i >= 0; i--) {
       for (let j = 0; j < value[i].length; j++) {
         const player = value[i][j];
         if (player === 'A') {
@@ -65,7 +65,7 @@ module.exports = {
       return 'Cheater! Cheater! Cheater!';
     }
 
-    for (let i = 0; i < value.length; i++) {
+    for (let i = value.length - 1; i >= 0; i--) {
       for (let j = 0; j < value[i].length; j++) {
         const player = value[i][j];
 
