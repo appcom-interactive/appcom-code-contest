@@ -61,7 +61,7 @@ files.forEach(({ name, impl }) => {
             ['E', 'E', 'S', 'G', 'G'],
           ]
         ])
-      ).to.deep.equal({x: 4, z: 2, t: 6});
+      ).to.deep.equal({x: 4, z: 2, t: 5});
     });
     it("should return x:2, z:5 and x:4, z:3)", () => {
       expect(
