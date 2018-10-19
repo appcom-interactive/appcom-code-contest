@@ -61,7 +61,7 @@ files.forEach(({ name, impl }) => {
             ['E', 'E', 'S', 'G', 'G'],
           ]
         ])
-      ).to.eq({x: 4, z: 2, t: 6});
+      ).to.deep.equal({x: 4, z: 2, t: 6});
     });
     it("should return x:2, z:5 and x:4, z:3)", () => {
       expect(
@@ -115,7 +115,7 @@ files.forEach(({ name, impl }) => {
             ['E', 'L', 'E', 'L', 'E', 'S'],
           ]
         ])
-      ).to.eq([{x: 2, z: 5, t: 5.5}, {x: 4, z: 3, t: 5.5}]);
+      ).to.deep.equal([{x: 2, z: 5, t: 5.5}, {x: 4, z: 3, t: 5.5}]);
     });
     it("should return 'Unwirtschaftliches Gelände'", () => {
       expect(
