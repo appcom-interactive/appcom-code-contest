@@ -37,6 +37,7 @@ Erklärung der IDs in den Spielwelten:
 | 1   | Block, dieser wird als Wand oder Boden verwendet, durch diese kann der Spieler nicht durch laufen                                                                 |
 | X   | Das Ziel, sobald der Spieler dieses Feld erreicht hat, hat er das Ziel erreicht. Zeige an, dass der Spieler die Welt wechseln kann, oder es erneut versuchen kann |
 | S   | Dies ist die Startposition des Spielers                                                                                                                           |
+| P   | Diese Blöcke können durch den Spieler aufgehoben und verschoben werden                                                                                            |
 
 Erste Welt (FlatWorld):
 ![FlatWorld](./flatworld.png)

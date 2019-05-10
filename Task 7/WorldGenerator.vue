@@ -61,7 +61,7 @@ export default {
       return JSON.stringify(this.computedField, undefined, 2);
     },
     allowedChars() {
-      return ["0", "1", "X", "S", ""];
+      return ["0", "1", "X", "S", "P", ""];
     }
   },
   methods: {
