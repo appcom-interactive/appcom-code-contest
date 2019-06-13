@@ -409,7 +409,7 @@ div.world-wrapper {
   div.parallax {
     background-image: url("./images/bg.png"), url("./images/plx-4.png"),
       url("./images/plx-2.png"), url("./images/plx-3.png");
-    transition: background-position 0.5s ease-in-out;
+    transition: background-position 0.2s;
     background-size: auto 100%;
   }
 
