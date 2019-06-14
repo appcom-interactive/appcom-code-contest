@@ -2,9 +2,9 @@
 
 LINKER=$(pkg-config --cflags --libs SDL2_image SDL2_ttf)
 if [ -d obj_standalone ]; then
-  rm -rf obj_standalone
+  rm -rf obj_standalone/*.o
 fi
-mkdir obj_standalone
+mkdir -p obj_standalone
 gcc -g -c -Wall src/util/list.c -o obj_standalone/list.o ${LINKER}
 gcc -g -c -Wall src/util/map.c -o obj_standalone/map.o ${LINKER}
 gcc -g -c -Wall src/util/sdl-util.c -o obj_standalone/sdl-util.o ${LINKER}
