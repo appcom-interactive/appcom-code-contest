@@ -9,7 +9,8 @@ typedef enum {
   WORLD_1,
   WORLD_2,
   WORLD_3,
-  WORLD_4
+  WORLD_4,
+  WORLD_5
 } WorldEnum;
 
 typedef enum {

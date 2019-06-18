@@ -15,6 +15,17 @@ typedef enum {
   CHAR_ACTION_FALLING
 } CharActionEnum;
 
+typedef enum {
+  SB_TOP_LEFT,
+  SB_TOP_CENTER,
+  SB_TOP_RIGHT,
+  SB_RIGHT,
+  SB_BOTTOM_RIGHT,
+  SB_BOTTOM_CENTER,
+  SB_BOTTOM_LEFT,
+  SB_LEFT
+} SurroundingBlock;
+
 typedef struct GameState {
   SDL_Texture* backgroundTexture;
   SDL_Texture* charTilesTexture;
@@ -32,6 +43,7 @@ typedef struct GameState {
   int charPosX;
   int charPosY;
   int charTileWidth;
+  int defaultWorldTileOffsetX;
   int jumpOriginY;
   CharActionEnum charAction;
   Uint32 lastRender;
@@ -63,6 +75,6 @@ int getCharTileYOffsetByAction(CharActionEnum);
 int getCharTileWidthByAction(CharActionEnum);
 void renderWorld(SDL_Renderer*, GameState*);
 void getNormalizedCharPos(GameState*);
-void determineBlitRectBySurroundingBlocks(SDL_Rect*, int8_t, int8_t, int8_t, int8_t);
+void determineBlitRectBySurroundingBlocks(GameState*, SDL_Rect*, uint8_t*);
 
 #endif

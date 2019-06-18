@@ -25,11 +25,13 @@ State* createWorldMenuState() {
   mapPut(menu->worlds, (void*)WORLD_2, (void*)loadWorld(WORLD_2, WORLD_LOADING_STATUS_PARTIAL));
   mapPut(menu->worlds, (void*)WORLD_3, (void*)loadWorld(WORLD_3, WORLD_LOADING_STATUS_PARTIAL));
   mapPut(menu->worlds, (void*)WORLD_4, (void*)loadWorld(WORLD_4, WORLD_LOADING_STATUS_PARTIAL));
+  mapPut(menu->worlds, (void*)WORLD_5, (void*)loadWorld(WORLD_5, WORLD_LOADING_STATUS_PARTIAL));
   menu->def = createMenuDef();
   pushListEntry(menu->def->entries, createMenuEntry(WORLD_1, ((World*)mapGet(menu->worlds, (void*)WORLD_1))->name, menu->entryFont, 1));
   pushListEntry(menu->def->entries, createMenuEntry(WORLD_2, ((World*)mapGet(menu->worlds, (void*)WORLD_2))->name, menu->entryFont, 0));
   pushListEntry(menu->def->entries, createMenuEntry(WORLD_3, ((World*)mapGet(menu->worlds, (void*)WORLD_3))->name, menu->entryFont, 0));
   pushListEntry(menu->def->entries, createMenuEntry(WORLD_4, ((World*)mapGet(menu->worlds, (void*)WORLD_4))->name, menu->entryFont, 0));
+  pushListEntry(menu->def->entries, createMenuEntry(WORLD_5, ((World*)mapGet(menu->worlds, (void*)WORLD_5))->name, menu->entryFont, 0));
   pushListEntry(menu->def->entries, createMenuEntry(WORLD_MENU_BACK, "Zurück", menu->entryFont, 0));
   state->onRender = &onWorldMenuRender;
   state->onEvent = &onWorldMenuEvent;

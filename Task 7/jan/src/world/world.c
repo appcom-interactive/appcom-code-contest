@@ -17,6 +17,7 @@ const char* getWorldFileByEnum(WorldEnum worldId) {
     case WORLD_2: return "./assets/worlds/world_2.wld";
     case WORLD_3: return "./assets/worlds/world_3.wld";
     case WORLD_4: return "./assets/worlds/world_4.wld";
+    case WORLD_5: return "./assets/worlds/world_5.wld";
   }
   return "";
 }
