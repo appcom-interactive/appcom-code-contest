@@ -44,10 +44,13 @@ export default {
     highlightAllowed: {
       type: Boolean,
       default: false
+    },
+    tileSpecificClasses: {
+      type: Object,
+      default: () => ({})
     }
   },
   computed: {
-    typeSpecificClasses() {},
     ...mapGetters(['debug'])
   }
 };

@@ -15,6 +15,7 @@
           :coordinates="`${row} / ${col}`"
           :shouldHighlight="shouldHighlight(row, col)"
           :highlightAllowed="highlightInformation(row, col).allowed"
+          :tileSpecificClasses="tileSpecificClasses(row, col)"
         />
       </div>
     </template>
