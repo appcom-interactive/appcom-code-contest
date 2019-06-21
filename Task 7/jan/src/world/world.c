@@ -38,7 +38,7 @@ World* loadWorld(WorldEnum id, WorldLoadingStatus status) {
     printf("File '%s' opening failed\n", w->path);
     return NULL;
   }
-  uint8_t nameLength; 
+  uint8_t nameLength;
   fread(&w->width, sizeof(uint8_t), 1, worldFile);
   fread(&w->height, sizeof(uint8_t), 1, worldFile);
   fread(&nameLength, sizeof(uint8_t), 1, worldFile);

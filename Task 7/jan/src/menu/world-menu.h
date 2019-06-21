@@ -3,9 +3,9 @@
 
 #include <SDL2/SDL_ttf.h>
 #include "menu.h"
-#include "../util/state.h"
+#include "../state/state.h"
 #include "../util/util.h"
-#include "../util/game-context.h"
+#include "../state/game-context.h"
 #include "../world/world.h"
 
 typedef struct WorldMenu {

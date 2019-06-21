@@ -4,9 +4,8 @@ emcc -Wall src/util/list.c -o obj/list.o
 emcc -Wall src/util/map.c -o obj/map.o
 emcc -Wall src/util/sdl-util.c -o obj/sdl-util.o -s USE_SDL=2 -s USE_SDL_TTF=2
 emcc -Wall src/menu/menu.c -o obj/menu.o -s USE_SDL=2 -s USE_SDL_TTF=2
-emcc -Wall src/util/game-context.c -o obj/game-context.o -s USE_SDL=2
-emcc -Wall src/util/state.c -o obj/state.o -s USE_SDL=2
-emcc -Wall src/menu/options-menu.c -o obj/options-menu.o -s USE_SDL=2 -s USE_SDL_TTF=2
+emcc -Wall src/state/game-context.c -o obj/game-context.o -s USE_SDL=2
+emcc -Wall src/state/state.c -o obj/state.o -s USE_SDL=2
 emcc -Wall src/menu/main-menu.c -o obj/main-menu.o -s USE_SDL=2 -s USE_SDL_TTF=2
 emcc -Wall src/menu/world-menu.c -o obj/world-menu.o -s USE_SDL=2 -s USE_SDL_TTF=2
 emcc -Wall src/world/world.c -o obj/world.o -s USE_SDL=2
@@ -18,7 +17,6 @@ emcc -Wall src/main.c \
   obj/state.o \
   obj/game-context.o \
   obj/menu.o \
-  obj/options-menu.o \
   obj/main-menu.o \
   obj/world-menu.o \
   obj/world.o \

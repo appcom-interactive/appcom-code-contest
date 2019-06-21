@@ -4,8 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
-#include "../util/state.h"
-#include "../util/game-context.h"
+#include "../state/state.h"
+#include "../state/game-context.h"
 #include "../world/world.h"
 
 typedef enum {

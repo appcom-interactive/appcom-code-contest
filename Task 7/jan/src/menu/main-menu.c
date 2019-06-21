@@ -1,5 +1,4 @@
 #include "main-menu.h"
-#include "options-menu.h"
 #include "world-menu.h"
 
 void freeEntry(void* entry) {
@@ -20,7 +19,6 @@ State* createMainMenuState() {
   m->entryFont = TTF_OpenFont("./assets/fonts/Ubuntu-R.ttf", 70);
   m->def = createMenuDef();
   pushListEntry(m->def->entries, (void*)createMenuEntry(MAIN_MENU_START, "Start", m->entryFont, 1));
-  pushListEntry(m->def->entries, (void*)createMenuEntry(MAIN_MENU_OPTIONS, "Options", m->entryFont, 0));
 #ifndef EMSCRIPTEN
   pushListEntry(m->def->entries, (void*)createMenuEntry(MAIN_MENU_EXIT, "Exit", m->entryFont, 0));
 #endif
@@ -68,9 +66,7 @@ void onMainMenuEvent(GameContext* ctx, SDL_Event* event) {
     ctx->currentState->mustRender = 1;
   } else if (event->key.keysym.sym == SDLK_RETURN) {
     int id = ((MenuEntry*)selectedEntry->data)->id;
-    if (id == MAIN_MENU_OPTIONS) {
-      pushState(ctx, createOptionsMenuState());
-    } else if(id == MAIN_MENU_START) {
+    if (id == MAIN_MENU_START) {
       pushState(ctx, createWorldMenuState());
     } else if(id == MAIN_MENU_EXIT) {
       ctx->currentState->onExit(ctx);

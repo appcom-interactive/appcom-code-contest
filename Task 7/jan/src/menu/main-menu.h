@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include "menu.h"
 #include "../util/util.h"
-#include "../util/state.h"
-#include "../util/game-context.h"
+#include "../state/state.h"
+#include "../state/game-context.h"
 
 typedef struct MainMenu {
   TTF_Font* headlineFont;

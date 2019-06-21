@@ -11,7 +11,7 @@ typedef void (*stateEventFn)(GameContext*, SDL_Event*);
 typedef void (*stateExitFn)(GameContext*);
 typedef void (*stateEnterFn)(GameContext*);
 
-typedef struct _game_state {
+typedef struct State {
   stateBeforeRenderFn onBeforeRender;
   stateRenderFn onRender;
   stateEventFn onEvent;

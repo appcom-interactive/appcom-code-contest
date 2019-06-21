@@ -9,9 +9,8 @@ gcc -g -c -Wall src/util/list.c -o obj_standalone/list.o ${LINKER}
 gcc -g -c -Wall src/util/map.c -o obj_standalone/map.o ${LINKER}
 gcc -g -c -Wall src/util/sdl-util.c -o obj_standalone/sdl-util.o ${LINKER}
 gcc -g -c -Wall src/menu/menu.c -o obj_standalone/menu.o ${LINKER}
-gcc -g -c -Wall src/util/game-context.c -o obj_standalone/game-context.o ${LINKER}
-gcc -g -c -Wall src/util/state.c -o obj_standalone/state.o ${LINKER}
-gcc -g -c -Wall src/menu/options-menu.c -o obj_standalone/options-menu.o ${LINKER}
+gcc -g -c -Wall src/state/game-context.c -o obj_standalone/game-context.o ${LINKER}
+gcc -g -c -Wall src/state/state.c -o obj_standalone/state.o ${LINKER}
 gcc -g -c -Wall src/menu/main-menu.c -o obj_standalone/main-menu.o ${LINKER}
 gcc -g -c -Wall src/menu/world-menu.c -o obj_standalone/world-menu.o ${LINKER}
 gcc -g -c -Wall src/world/world.c -o obj_standalone/world.o ${LINKER}
@@ -23,7 +22,6 @@ gcc -g -Wall src/main.c \
   obj_standalone/state.o \
   obj_standalone/game-context.o \
   obj_standalone/menu.o \
-  obj_standalone/options-menu.o \
   obj_standalone/main-menu.o \
   obj_standalone/world-menu.o \
   obj_standalone/world.o \
