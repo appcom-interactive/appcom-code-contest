@@ -1,5 +1,5 @@
 // Replace `template` with your own solution
-const polybios = require('./solutions/jens');
+const polybios = require('./solutions/stefan');
 
 var mocha = require('mocha');
 var describe = mocha.describe;
