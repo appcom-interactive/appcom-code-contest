@@ -198,11 +198,20 @@ export default {
       x -= 1;
 
       if (this.copiedWorld) {
+        if (x < 0 || y < 0) {
+          return '1';
+        }
+
+        if (x > this.copiedWorld.length + 2 || y > this.copiedWorld[0].length + 2) {
+          return '1';
+        }
+
         if (this.copiedWorld[y]) {
           return this.copiedWorld[y][x];
         }
       }
-      return 0;
+
+      return '1';
     },
     movePlayer(direction) {
       const { x, y } = this.playerPosition;
@@ -286,12 +295,25 @@ export default {
       return this.highlight.find(h => h.x === col && h.y == row) || { allowed: false };
     },
     tileSpecificClasses(row, col) {
-      return {
+      const data = {
         underlying: this.getValue(row - 1, col) === this.getValue(row, col) || row === 1,
+        diagonalRight: this.getValue(row - 1, col + 1) !== '1',
+        diagonalLeft: this.getValue(row - 1, col - 1) !== '1',
+        airLeft: this.getValue(row, col - 1) !== '1',
+        airRight: this.getValue(row, col + 1) !== '1',
         flip: this.getValue(row, col) === 'S' && this.flipPlayer,
         moving: this.keydown,
         starting: this.starting
       };
+
+      if (data.airLeft) {
+        delete data.diagonalLeft;
+      }
+      if (data.airRight) {
+        delete data.diagonalRight;
+      }
+
+      return data;
     },
     ...mapMutations(['increaseShiftLeft', 'decreaseShiftLeft', 'resetShiftLeft', 'setReset', 'setPlayer']),
     ...mapState(['worlds', 'shiftLeft'])

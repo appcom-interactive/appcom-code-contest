@@ -71,12 +71,72 @@ div.tile {
   .tile- {
     &1 {
       background: url('../../assets/tileset.png') no-repeat;
-      background-size: initial;
       background-position: -46px -30px;
       background-size: 1200px;
 
       &.underlying {
-        background-position: -46px -78px;
+        background-position: -658px -376px;
+
+        &.diagonalRight {
+          background-position: -338px -493px;
+        }
+
+        &.diagonalLeft {
+          background-position: -461px -493px;
+        }
+
+        &.airLeft {
+          background-position: 0 -76px;
+        }
+
+        &.airRight {
+          background-position: -93px -76px;
+
+          &.diagonalLeft {
+            position: relative;
+
+            &:before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              width: 50%;
+
+              background: url('../../assets/tileset.png') no-repeat;
+              background-size: 1200px;
+              background-position: -463px -491px;
+            }
+          }
+        }
+
+        &.airLeft.airRight {
+          background-position: -93px -76px;
+          position: relative;
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+
+            background: url('../../assets/tileset.png') no-repeat;
+            background-size: 1200px;
+            background-position: -3px -76px;
+          }
+        }
+      }
+
+      &:not(.underlying) {
+        &.airLeft {
+          background-position: 0 -30px;
+        }
+
+        &.airRight {
+          background-position: -93px -30px;
+        }
       }
     }
 
