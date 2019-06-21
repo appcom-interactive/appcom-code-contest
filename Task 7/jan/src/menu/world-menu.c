@@ -81,9 +81,7 @@ void onWorldMenuEvent(GameContext* ctx, SDL_Event* event) {
       return;
     }
     pushState(ctx, createGameState(id));
-    printf("%d selected\n", id);
   }
-  printf("WorldMenu->onEvent()\n");
 }
 
 void onWorldMenuRender(GameContext* ctx) {
@@ -103,11 +101,8 @@ void onWorldMenuRender(GameContext* ctx) {
 void onWorldMenuExit(GameContext* ctx) {
   State* state = (State*)ctx->currentState;
   WorldMenu* menu = (WorldMenu*)state->stateExt;
-  printf("freeList(def->entries)\n");
   freeList(menu->def->entries);
-  printf("free(def)\n");
   free(menu->def);
-  printf("freeMap(worlds)\n");
   freeMap(menu->worlds);
   TTF_CloseFont(menu->entryFont);
   SDL_DestroyTexture(menu->backgroundTexture);

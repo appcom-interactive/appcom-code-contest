@@ -13,23 +13,19 @@ GameContext* createContext(SDL_Renderer* r, SDL_Window* w, State* s) {
 }
 
 void pushState(GameContext* ctx, State* s) {
-  printf("pushState()\n");
   if (ctx->currentState == NULL) {
     ctx->currentState = s;
     if (ctx->currentState->onEnter != NULL) {
-      printf("pushState->onEnter()\n");
       ctx->currentState->onEnter(ctx);
     }
     return;
   }
   if (ctx->currentState->onExit != NULL) {
-    printf("pushState->onExit()\n");
     ctx->currentState->onExit(ctx);
   }
   free(ctx->currentState);
   ctx->currentState = s;
   if (ctx->currentState->onEnter != NULL) {
-    printf("pushState->onEnter()\n");
     ctx->currentState->onEnter(ctx);
   }
 }

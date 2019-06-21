@@ -3,7 +3,6 @@
 #include "../util/sdl-util.h"
 
 void freeWorld(World* world) {
-  printf("freeWorld()\n");
   if (world->status == WORLD_LOADING_STATUS_FULL) {
     free(world->blocks);
   }

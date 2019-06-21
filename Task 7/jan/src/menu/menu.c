@@ -2,7 +2,6 @@
 #include "stdlib.h"
 
 void freeMenuEntry(void* entry) {
-  printf("freeMenuEntry()\n");
   MenuEntry* e = (MenuEntry*)entry;
   free(e);
 }
@@ -10,7 +9,7 @@ void freeMenuEntry(void* entry) {
 MenuDefinition* createMenuDef() {
   MenuDefinition* d = (MenuDefinition*)malloc(sizeof(MenuDefinition));
   d->entries = createLinkedList(&freeMenuEntry);
-  return d; 
+  return d;
 }
 
 MenuEntry* createMenuEntry(int id, const char* name, TTF_Font* font, int selected) {

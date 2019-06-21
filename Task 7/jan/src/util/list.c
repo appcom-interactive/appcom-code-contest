@@ -103,7 +103,6 @@ void walkList(List* l, listWalkFn f) {
 }
 
 void freeList(List* l) {
-  printf("freeList()\n");
   ListEntry* current = l->head;
   ListEntry* next = NULL;
   while (current != NULL) {

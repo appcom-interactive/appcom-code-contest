@@ -39,7 +39,6 @@ void onMainMenuEnter(GameContext* ctx) {
   SDL_Surface* backgroundSurface = IMG_Load("./assets/gfx/plx-4.png");
   menu->backgroundTexture = SDL_CreateTextureFromSurface(ctx->renderer, backgroundSurface);
   menu->menuHeadlineTexture = createTextTexture(ctx->renderer, "JUMPY", menu->color, menu->headlineFont, &menu->menuHeadlineWidth, &menu->menuHeadlineHeight);
-  printf("MainMenu->onEnter()\n");
   SDL_FreeSurface(backgroundSurface);
 }
 
@@ -76,7 +75,6 @@ void onMainMenuEvent(GameContext* ctx, SDL_Event* event) {
       ctx->running = 0;
     }
   }
-  printf("MainMenu->onEvent()\n");
 }
 
 void onBeforeMainMenuRender(GameContext* ctx) {}

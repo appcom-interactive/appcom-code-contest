@@ -70,7 +70,6 @@ void mapDelete(Map* map, void* key) {
 }
 
 void freeMap(Map* map) {
-  printf("freeMap()\n");
   freeList(map->entries);
   free(map);
   map = NULL;
