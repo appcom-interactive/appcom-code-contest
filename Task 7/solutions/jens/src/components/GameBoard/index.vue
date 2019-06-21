@@ -1,24 +1,33 @@
 <template>
-  <div
-    class="row"
-    v-if="copiedWorld"
-    id="world"
-    :style="{
+  <div class="world-center-wrapper">
+    <div
+      class="row"
+      v-if="copiedWorld"
+      id="world"
+      :style="{
           'grid-template-rows': `repeat(${worldMeta.rows}, 62px)`,
           'grid-template-columns': `repeat(${worldMeta.cols}, 62px)`
         }"
-  >
-    <template v-for="row in worldMeta.rows">
-      <div v-for="col in worldMeta.cols" :key="`${row}-${col}`" class="block">
-        <Tile
-          :value="getValue(row, col)"
-          :coordinates="`${row} / ${col}`"
-          :shouldHighlight="shouldHighlight(row, col)"
-          :highlightAllowed="highlightInformation(row, col).allowed"
-          :tileSpecificClasses="tileSpecificClasses(row, col)"
-        />
-      </div>
-    </template>
+    >
+      <template v-for="row in worldMeta.rows">
+        <div v-for="col in worldMeta.cols" :key="`${row}-${col}`" class="block">
+          <Tile
+            :value="getValue(row, col)"
+            :coordinates="`${row} / ${col}`"
+            :shouldHighlight="shouldHighlight(row, col)"
+            :highlightAllowed="highlightInformation(row, col).allowed"
+            :tileSpecificClasses="tileSpecificClasses(row, col)"
+            :showTutorial="showTutorial"
+          />
+        </div>
+      </template>
+      <GoalTile :position="goalTilePosition"/>
+      <PlayerTile
+        :flipPlayer="this.flipPlayer"
+        :moving="keydown"
+        @animation-finished="animationFinished"
+      />
+    </div>
   </div>
 </template>
 
@@ -26,10 +35,16 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
 import Tile from './Tile';
+import PlayerTile from './PlayerTile';
+import GoalTile from './GoalTile';
+
+import worlds from '../../worlds.json';
 
 export default {
   components: {
-    Tile
+    Tile,
+    PlayerTile,
+    GoalTile
   },
   data() {
     return {
@@ -41,13 +56,24 @@ export default {
       moving: true,
       keydown: false,
       starting: true,
-      showTutorial: true
+      showTutorial: true,
+      goalTilePosition: {
+        x: 0,
+        y: 0
+      }
     };
   },
   watch: {
     worldId() {
       this.copiedWorld = this.selectedWorld.world.map(w => [...w]);
       this.starting = true;
+
+      this.setPlayer(this.playerPosition);
+
+      const y = this.copiedWorld.findIndex(row => row.some(col => col === 'X'));
+      const x = this.copiedWorld[y].findIndex(col => col === 'X');
+
+      this.goalTilePosition = { x, y };
     },
     reset(value) {
       if (value) {
@@ -55,7 +81,15 @@ export default {
         this.resetShiftLeft();
 
         this.copiedWorld = this.selectedWorld.world.map(w => [...w]);
+        this.setPlayer(this.playerPosition);
+
         this.starting = true;
+        this.keydown = false;
+
+        const y = this.copiedWorld.findIndex(row => row.some(col => col === 'X'));
+        const x = this.copiedWorld[y].findIndex(col => col === 'X');
+
+        this.goalTilePosition = { x, y };
       }
     }
   },
@@ -90,7 +124,6 @@ export default {
   mounted() {
     document.addEventListener('keyup', () => {
       this.moving = true;
-      this.keydown = false;
     });
     document.addEventListener('keydown', this.handleKeyDown);
 
@@ -98,6 +131,12 @@ export default {
 
     if (this.worldId) {
       this.copiedWorld = this.selectedWorld.world.map(w => [...w]);
+      this.setPlayer(this.playerPosition);
+
+      const y = this.copiedWorld.findIndex(row => row.some(col => col === 'X'));
+      const x = this.copiedWorld[y].findIndex(col => col === 'X');
+
+      this.goalTilePosition = { x, y };
     }
 
     setInterval(() => {
@@ -117,12 +156,15 @@ export default {
     }, 100);
   },
   methods: {
+    animationFinished() {
+      this.keydown = false;
+    },
     handleKeyDown(event) {
-      if (this.finished) {
+      if (this.finished || this.keydown) {
         return;
       }
 
-      if ([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
+      if ([37, 39].indexOf(event.keyCode) > -1) {
         event.preventDefault();
         this.keydown = true;
         this.starting = false;
@@ -130,6 +172,7 @@ export default {
       }
 
       if (!this.moving) {
+        this.keydown = false;
         return;
       }
 
@@ -137,7 +180,7 @@ export default {
 
       setTimeout(() => {
         this.moving = true;
-      }, 150);
+      }, 700);
 
       switch (event.code) {
         case 'ArrowLeft': {
@@ -206,7 +249,11 @@ export default {
         this.pullPlayer();
       } else if (this.canMove({ x: newPos.x, y: newPos.y - 1 })) {
         this.setPlayerPosition({ x: newPos.x, y: newPos.y - 1 });
+      } else {
+        this.keydown = false;
       }
+
+      this.setPlayer(this.playerPosition);
     },
     pullPlayer() {
       const { x, y } = this.playerPosition;
@@ -236,7 +283,7 @@ export default {
       return this.highlight.some(h => h.x === col && h.y == row);
     },
     highlightInformation(row, col) {
-      return this.highlight.find(h => h.x === col && h.y == row);
+      return this.highlight.find(h => h.x === col && h.y == row) || { allowed: false };
     },
     tileSpecificClasses(row, col) {
       return {
@@ -246,66 +293,61 @@ export default {
         starting: this.starting
       };
     },
-    ...mapMutations(['increaseShiftLeft', 'decreaseShiftLeft', 'resetShiftLeft', 'setReset']),
+    ...mapMutations(['increaseShiftLeft', 'decreaseShiftLeft', 'resetShiftLeft', 'setReset', 'setPlayer']),
     ...mapState(['worlds', 'shiftLeft'])
   }
 };
 </script>
 
 <style lang="scss" scoped>
-div#world {
-  display: grid;
-  justify-content: center;
-  align-items: center;
+div.world-center-wrapper {
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
 
-  div.block {
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
+  div#world {
+    display: grid;
 
-    &.grid {
-      border: 1px dotted lightgray;
-    }
+    div.block {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
 
-    &.editing {
-      display: grid;
-      align-items: center;
-      justify-content: center;
-    }
+      &.grid {
+        border: 1px dotted lightgray;
+      }
 
-    &:hover {
+      &.editing {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &:hover {
+        .hoverable {
+          display: block;
+        }
+      }
+
       .hoverable {
-        display: block;
+        position: absolute;
+        display: none;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.3);
+        cursor: crosshair;
+      }
+
+      input {
+        font-size: 22px;
+        -webkit-appearance: none;
+        border: 0;
       }
     }
-
-    .hoverable {
-      position: absolute;
-      display: none;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.3);
-      cursor: crosshair;
-    }
-
-    input {
-      font-size: 22px;
-      -webkit-appearance: none;
-      border: 0;
-    }
   }
-}
-
-.highlight-transition-enter-active {
-  transition: opacity 0.2s;
-}
-.highlight-transition-leave-active {
-  transition: opacity 0.5s;
-}
-.highlight-transition-enter, .highlight-transition-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
 }
 </style>

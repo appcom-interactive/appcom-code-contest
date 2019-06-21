@@ -23,7 +23,7 @@ export default {
 div.parallax {
   background-image: url('../assets/bg.png'), url('../assets/plx-4.png'), url('../assets/plx-2.png'),
     url('../assets/plx-3.png');
-  transition: background-position 0.2s;
+  transition: background-position 1.2s;
   background-size: auto 100%;
 }
 </style>

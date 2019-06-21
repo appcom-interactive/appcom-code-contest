@@ -10,11 +10,16 @@ export default new Vuex.Store({
       showTileIDs: false,
       showCoordinates: false
     },
-    worldId: 'FlatWorld',
+    worldId: 'mountains',
     worlds: [],
     shiftLeft: 0,
     finished: false,
-    reset: false
+    showFinishedModal: false,
+    reset: false,
+    player: {
+      x: undefined,
+      y: undefined
+    }
   },
   mutations: {
     increaseShiftLeft(state) {
@@ -29,11 +34,18 @@ export default new Vuex.Store({
     setFinished(state, value) {
       state.finished = value;
     },
+    setShowFinishedModal(state, value) {
+      state.showFinishedModal = value;
+    },
     setWorldId(state, worldId) {
       state.worldId = worldId;
     },
     setReset(state, value) {
       state.reset = value;
+    },
+    setPlayer(state, { x, y } = {}) {
+      state.player.x = x;
+      state.player.y = y;
     }
   },
   actions: {},
@@ -56,8 +68,14 @@ export default new Vuex.Store({
     finished(state) {
       return state.finished;
     },
+    showFinishedModal(state) {
+      return state.showFinishedModal;
+    },
     reset(state) {
       return state.reset;
+    },
+    player(state) {
+      return state.player;
     }
   }
 });

@@ -1,29 +1,29 @@
 <template>
   <div class="tile">
-    <div v-if="condition" class="tile-type" :class="[`tile-${value}`, tileSpecificClasses]">
+    <div class="tile-type" :class="[`tile-${value}`, tileSpecificClasses]">
       <div v-if="debug.showTileIDs" class="text">{{value}}</div>
       <div v-if="debug.showCoordinates" class="text">{{coordinates}}</div>
-
-      <transition name="highlight-transition">
-        <div v-if="value === 'S' && showTutorial" class="tutorial">
-          <p>Willkommen zu Block Mate!</p>
-          <br>
-          <p>Benutze die Pfeiltasten um dich in der Spielwelt zu bewegen.</p>
-        </div>
-      </transition>
-
-      <transition name="highlight-transition">
-        <div v-if="value === 'X' && showTutorial" class="tutorial">
-          <p>Erreiche die Tür!</p>
-        </div>
-      </transition>
-
-      <template v-if="debug.collisionTracking">
-        <transition name="highlight-transition">
-          <div v-if="shouldHighlight" class="highlight" :class="{ allowed: highlightAllowed}"></div>
-        </transition>
-      </template>
     </div>
+
+    <transition name="highlight-transition">
+      <div v-if="value === 'S' && showTutorial" class="tutorial">
+        <p>Willkommen zu Block Mate!</p>
+        <br>
+        <p>Benutze die Pfeiltasten um dich in der Spielwelt zu bewegen.</p>
+      </div>
+    </transition>
+
+    <transition name="highlight-transition">
+      <div v-if="value === 'X' && showTutorial" class="tutorial">
+        <p>Erreiche das Ziel!</p>
+      </div>
+    </transition>
+
+    <template v-if="debug.collisionTracking">
+      <transition name="highlight-transition">
+        <div v-if="shouldHighlight" class="highlight" :class="{ allowed: highlightAllowed}"></div>
+      </transition>
+    </template>
   </div>
 </template>
 
@@ -48,6 +48,10 @@ export default {
     tileSpecificClasses: {
       type: Object,
       default: () => ({})
+    },
+    showTutorial: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -58,9 +62,15 @@ export default {
 
 <style lang="scss" scoped>
 div.tile {
-  &.tile- {
+  height: 100%;
+
+  .tile-type {
+    height: 100%;
+  }
+
+  .tile- {
     &1 {
-      background: url('../assets/tileset.png') no-repeat;
+      background: url('../../assets/tileset.png') no-repeat;
       background-size: initial;
       background-position: -46px -30px;
       background-size: 1200px;
@@ -71,11 +81,12 @@ div.tile {
     }
 
     &S {
-      background: url('../assets/player_idle.gif') no-repeat center;
+      visibility: hidden;
+      background: url('../../assets/player_idle.gif') no-repeat center;
       background-size: contain;
 
       &.moving {
-        background: url('../assets/run.gif') no-repeat center;
+        background: url('../../assets/run.gif') no-repeat center;
         background-size: contain;
       }
 
@@ -83,42 +94,10 @@ div.tile {
         transform: scaleX(-1);
       }
 
-      &.starting {
-        background: url('../assets/midair.gif') no-repeat center;
+      /* &.starting {
+        background: url('../../assets/midair.gif') no-repeat center;
         background-size: contain;
-      }
-    }
-
-    &X {
-      z-index: 99;
-      position: relative;
-
-      &:before {
-        content: '';
-        position: absolute;
-        background: rgb(107, 46, 18);
-        width: 50%;
-        height: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        box-shadow: 0 0 0 rgb(177, 60, 5);
-        animation: pulse 2s infinite;
-
-        z-index: 99;
-      }
-
-      &:after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 0;
-        width: 1px;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3);
-        transform: translateX(-50%);
-        z-index: 100;
-      }
+      } */
     }
   }
 
@@ -168,6 +147,7 @@ div.tile {
     background-color: rgb(184, 220, 204);
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.3);
     color: black;
+    z-index: 99;
 
     p:first-child {
       white-space: nowrap;
@@ -188,5 +168,15 @@ div.tile {
       border-top: 10px solid rgb(184, 220, 204);
     }
   }
+}
+
+.highlight-transition-enter-active {
+  transition: opacity 0.2s;
+}
+.highlight-transition-leave-active {
+  transition: opacity 0.5s;
+}
+.highlight-transition-enter, .highlight-transition-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -1,14 +1,13 @@
 <template>
   <transition name="finished-modal">
-    <div v-if="finished" class="finished-wrapper">
+    <div v-if="showFinishedModal" class="finished-wrapper">
       <div class="finished">
         <p class="headline">Das ist das Ende!</p>
-        <p>Du kannst die Welt nun erneut starten oder in das nächste Level springen!</p>
-
+        <p>Wähle aus aus, ob du das Level neustarten oder in das nächste Level springen möchtest.</p>
         <div>
           <button @click="restart">Level neustarten</button>
           <div class="spacer">&nbsp;</div>
-          <button @click="next">Nächstes Level spielen</button>
+          <button @click="next">Nächstes Level</button>
         </div>
       </div>
     </div>
@@ -21,12 +20,13 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 export default {
   computed: {
     ...mapGetters(['selectedWorld', 'worlds', 'worldId']),
-    ...mapState(['finished'])
+    ...mapState(['showFinishedModal'])
   },
   methods: {
     restart() {
       this.setReset(true);
       this.setFinished(false);
+      this.setShowFinishedModal(false);
     },
     next() {
       const index = this.worlds.findIndex(world => world.id === this.worldId);
@@ -38,9 +38,10 @@ export default {
       }
 
       this.setFinished(false);
+      this.setShowFinishedModal(false);
       this.setReset(true);
     },
-    ...mapMutations(['setWorldId', 'setFinished', 'setReset'])
+    ...mapMutations(['setWorldId', 'setFinished', 'setShowFinishedModal', 'setReset'])
   }
 };
 </script>
@@ -105,8 +106,11 @@ export default {
 .finished-modal-leave-active {
   transition: all 1s ease-in-out;
 }
+.finished-modal-enter {
+  transition-delay: 2s;
+  transform: translateY(-100%);
+}
 
-.finished-modal-enter,
 .finished-modal-leave-to {
   transform: translateY(-100%);
 }
