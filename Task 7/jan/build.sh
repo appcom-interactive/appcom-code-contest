@@ -9,6 +9,7 @@ emcc -Wall src/state/state.c -o obj/state.o -s USE_SDL=2
 emcc -Wall src/menu/main-menu.c -o obj/main-menu.o -s USE_SDL=2 -s USE_SDL_TTF=2
 emcc -Wall src/menu/world-menu.c -o obj/world-menu.o -s USE_SDL=2 -s USE_SDL_TTF=2
 emcc -Wall src/world/world.c -o obj/world.o -s USE_SDL=2
+emcc -Wall src/game/game-renderer.c -o obj/game-renderer.o -s USE_SDL=2 -s USE_SDL_TTF=2
 emcc -Wall src/game/game.c -o obj/game.o -s USE_SDL=2 -s USE_SDL_TTF=2
 emcc -Wall src/main.c \
   obj/list.o \
@@ -20,6 +21,7 @@ emcc -Wall src/main.c \
   obj/main-menu.o \
   obj/world-menu.o \
   obj/world.o \
+  obj/game-renderer.o \
   obj/game.o \
   -o game.html \
   -s USE_SDL=2 \

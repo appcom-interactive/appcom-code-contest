@@ -14,6 +14,7 @@ gcc -g -c -Wall src/state/state.c -o obj_standalone/state.o ${LINKER}
 gcc -g -c -Wall src/menu/main-menu.c -o obj_standalone/main-menu.o ${LINKER}
 gcc -g -c -Wall src/menu/world-menu.c -o obj_standalone/world-menu.o ${LINKER}
 gcc -g -c -Wall src/world/world.c -o obj_standalone/world.o ${LINKER}
+gcc -g -c -Wall src/game/game-renderer.c -o obj_standalone/game-renderer.o ${LINKER}
 gcc -g -c -Wall src/game/game.c -o obj_standalone/game.o ${LINKER}
 gcc -g -Wall src/main.c \
   obj_standalone/list.o \
@@ -25,6 +26,7 @@ gcc -g -Wall src/main.c \
   obj_standalone/main-menu.o \
   obj_standalone/world-menu.o \
   obj_standalone/world.o \
+  obj_standalone/game-renderer.o \
   obj_standalone/game.o \
   -o game \
   ${LINKER}

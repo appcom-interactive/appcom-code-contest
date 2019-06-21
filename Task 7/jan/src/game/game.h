@@ -4,9 +4,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
+#include "game-renderer.h"
 #include "../state/state.h"
 #include "../state/game-context.h"
 #include "../world/world.h"
+
+typedef struct GameRenderer GameRenderer;
 
 typedef enum {
   CHAR_ACTION_IDLEING,
@@ -27,13 +30,6 @@ typedef enum {
 } SurroundingBlock;
 
 typedef struct GameState {
-  SDL_Texture* backgroundTexture;
-  SDL_Texture* charTilesTexture;
-  SDL_Texture* gameTexture;
-  SDL_Texture* worldTexture;
-  SDL_Texture* worldTilesTexture;
-  SDL_Surface* worldTilesSurface;
-  SDL_Surface* worldSurface;
   World* world;
   int arrowTileOffsetX;
   int winRectHeight;
@@ -58,7 +54,7 @@ typedef struct GameState {
   int leftKeyDown;
   int rightKeyDown;
   int winFlag;
-  TTF_Font* winnerFont;
+  GameRenderer* gameRenderer;
 } GameState;
 
 // State functions
@@ -73,8 +69,8 @@ void onGameExit(GameContext*);
 int getMaxCharTileCountByAction(CharActionEnum);
 int getCharTileYOffsetByAction(CharActionEnum);
 int getCharTileWidthByAction(CharActionEnum);
-void renderWorld(SDL_Renderer*, GameState*);
 void getNormalizedCharPos(GameState*);
-void determineBlitRectBySurroundingBlocks(GameState*, SDL_Rect*, uint8_t*);
+void determineBoundingRectangleByCharPos(int, int, int, SDL_Rect*);
+void determineFeetRectangleByCharPos(GameState*, SDL_Rect*);
 
 #endif

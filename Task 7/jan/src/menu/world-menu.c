@@ -20,7 +20,6 @@ State* createWorldMenuState() {
   WorldMenu* menu = (WorldMenu*)malloc(sizeof(WorldMenu));
   menu->entryFont = TTF_OpenFont("./assets/fonts/Ubuntu-R.ttf", 70);
   menu->worlds = createMap(MAP_TYPE_ENUM, &freeWorldMapEntry, NULL);
-  printf("WORLD\n");
   mapPut(menu->worlds, (void*)WORLD_1, (void*)loadWorld(WORLD_1, WORLD_LOADING_STATUS_PARTIAL));
   mapPut(menu->worlds, (void*)WORLD_2, (void*)loadWorld(WORLD_2, WORLD_LOADING_STATUS_PARTIAL));
   mapPut(menu->worlds, (void*)WORLD_3, (void*)loadWorld(WORLD_3, WORLD_LOADING_STATUS_PARTIAL));
