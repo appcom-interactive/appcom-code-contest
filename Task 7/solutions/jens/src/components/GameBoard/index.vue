@@ -18,6 +18,7 @@
             :highlightAllowed="highlightInformation(row, col).allowed"
             :tileSpecificClasses="tileSpecificClasses(row, col)"
             :showTutorial="showTutorial"
+            :hideTile="moveTile.y - 1 === col && moveTile.x + 1 === row"
           />
         </div>
       </template>
@@ -25,8 +26,10 @@
       <PlayerTile
         :flipPlayer="this.flipPlayer"
         :moving="keydown"
+        :pickBlock="pickBlock"
         @animation-finished="animationFinished"
       />
+      <MoveableTile v-if="moveTile.y !== 0 && moveTile.x !== 0" :position="moveTile"/>
     </div>
   </div>
 </template>
@@ -37,6 +40,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import Tile from './Tile';
 import PlayerTile from './PlayerTile';
 import GoalTile from './GoalTile';
+import MoveableTile from './MoveableTile';
 
 import worlds from '../../worlds.json';
 
@@ -44,7 +48,8 @@ export default {
   components: {
     Tile,
     PlayerTile,
-    GoalTile
+    GoalTile,
+    MoveableTile
   },
   data() {
     return {
@@ -57,6 +62,11 @@ export default {
       keydown: false,
       starting: true,
       showTutorial: true,
+      pickBlock: null,
+      moveTile: {
+        x: 0,
+        y: 0
+      },
       goalTilePosition: {
         x: 0,
         y: 0
@@ -159,6 +169,32 @@ export default {
     animationFinished() {
       this.keydown = false;
     },
+    isAnyBlockPickable() {
+      const { x, y } = this.playerPosition;
+
+      const left = this.getValue(y + 1, x, true);
+      const right = this.getValue(y + 1, x + 2, true);
+
+      if (this.pickBlock !== null) {
+        this.moveTile.x = 0;
+        this.moveTile.y = 0;
+        return false;
+      } else if (left === 'P') {
+        this.pickBlock = 'left';
+        this.moveTile.x = x;
+        this.moveTile.y = y + 1;
+
+        return true;
+      } else if (right === 'P') {
+        this.pickBlock = 'right';
+        this.moveTile.x = x + 2;
+        this.moveTile.y = y + 1;
+
+        return true;
+      }
+
+      return false;
+    },
     handleKeyDown(event) {
       if (this.finished || this.keydown) {
         return;
@@ -169,6 +205,17 @@ export default {
         this.keydown = true;
         this.starting = false;
         this.showTutorial = false;
+      }
+
+      if (event.keyCode === 32) {
+        if (this.isAnyBlockPickable()) {
+          this.setMessage('Du kannst den Block jetzt verschieben!');
+        } else if (this.pickBlock !== null) {
+          this.pickBlock = null;
+          this.setMessage('Der Block wurde losgelassen!');
+        } else {
+          this.setMessage('Es ist kein verschiebbarer Block in der Nähe!');
+        }
       }
 
       if (!this.moving) {
@@ -193,7 +240,7 @@ export default {
         }
       }
     },
-    getValue(y, x) {
+    getValue(y, x, check = false) {
       y -= 1;
       x -= 1;
 
@@ -204,6 +251,15 @@ export default {
 
         if (x > this.copiedWorld.length + 2 || y > this.copiedWorld[0].length + 2) {
           return '1';
+        }
+
+        if (check) {
+          this.highlight.push({
+            x: x + 1,
+            y: y + 1,
+            allowed: false,
+            dismiss: 1000
+          });
         }
 
         if (this.copiedWorld[y]) {
@@ -252,7 +308,24 @@ export default {
           const row = this.copiedWorld[newPos.y].slice(0);
           row[old.x] = '0';
           row[newPos.x] = 'S';
+
           this.$set(this.copiedWorld, newPos.y, row);
+
+          if (row[newPos.x - 1] === 'P' && !this.pickBlock) {
+            this.setMessage('Den Block links von dir kannst du bewegen ;)');
+          } else if (row[newPos.x + 1] === 'P' && !this.pickBlock) {
+            this.setMessage('Den Block rechts von dir kannst du bewegen ;)');
+          }
+
+          if (this.pickBlock) {
+            if (this.pickBlock === 'left') {
+              // TODO: Move moveable tile to the left
+              // row[newPos.x - 1] = '0';
+              // row[newPos.x - 2] = 'P';
+              // this.$set(this.copiedWorld, newPos.y, row);
+              // } else {
+            }
+          }
         }
 
         this.pullPlayer();
@@ -315,7 +388,14 @@ export default {
 
       return data;
     },
-    ...mapMutations(['increaseShiftLeft', 'decreaseShiftLeft', 'resetShiftLeft', 'setReset', 'setPlayer']),
+    ...mapMutations([
+      'increaseShiftLeft',
+      'decreaseShiftLeft',
+      'resetShiftLeft',
+      'setReset',
+      'setPlayer',
+      'setMessage'
+    ]),
     ...mapState(['worlds', 'shiftLeft'])
   }
 };

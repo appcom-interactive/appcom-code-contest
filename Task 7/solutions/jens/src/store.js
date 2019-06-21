@@ -6,11 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     debug: {
-      collisionTracking: false,
+      collisionTracking: true,
       showTileIDs: false,
       showCoordinates: false
     },
-    worldId: 'mountains',
+    worldId: 'FlatWorld',
     worlds: [],
     shiftLeft: 0,
     finished: false,
@@ -19,7 +19,8 @@ export default new Vuex.Store({
     player: {
       x: undefined,
       y: undefined
-    }
+    },
+    message: null
   },
   mutations: {
     increaseShiftLeft(state) {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     setPlayer(state, { x, y } = {}) {
       state.player.x = x;
       state.player.y = y;
+    },
+    setMessage(state, value) {
+      state.message = value;
     }
   },
   actions: {},
@@ -76,6 +80,9 @@ export default new Vuex.Store({
     },
     player(state) {
       return state.player;
+    },
+    message(state) {
+      return state.message;
     }
   }
 });

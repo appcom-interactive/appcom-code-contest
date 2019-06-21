@@ -1,6 +1,6 @@
 <template>
   <div class="tile">
-    <div class="tile-type" :class="[`tile-${value}`, tileSpecificClasses]">
+    <div class="tile-type" :class="[`tile-${value}`, tileSpecificClasses, { hideTile }]">
       <div v-if="debug.showTileIDs" class="text">{{value}}</div>
       <div v-if="debug.showCoordinates" class="text">{{coordinates}}</div>
     </div>
@@ -19,6 +19,18 @@
       </div>
     </transition>
 
+    <transition name="highlight-transition">
+      <div v-if="value === 'P' && showTutorial" class="tutorial">
+        <p>Verwende die Leertaste</p>
+      </div>
+    </transition>
+
+    <transition name="highlight-transition">
+      <div v-if="showMessage && value === 'S' && !showTutorial" class="tutorial small">
+        <p>{{showMessage}}</p>
+      </div>
+    </transition>
+
     <template v-if="debug.collisionTracking">
       <transition name="highlight-transition">
         <div v-if="shouldHighlight" class="highlight" :class="{ allowed: highlightAllowed}"></div>
@@ -28,7 +40,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   props: {
     value: {
@@ -52,10 +64,32 @@ export default {
     showTutorial: {
       type: Boolean,
       default: false
+    },
+    hideTile: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: () => ({
+    showMessage: null
+  }),
+  watch: {
+    message(value) {
+      if (value) {
+        this.showMessage = value;
+
+        setTimeout(() => {
+          this.showMessage = null;
+          this.setMessage(null);
+        }, 1500);
+      }
     }
   },
   computed: {
-    ...mapGetters(['debug'])
+    ...mapGetters(['debug', 'message'])
+  },
+  methods: {
+    ...mapMutations(['setMessage'])
   }
 };
 </script>
@@ -66,6 +100,10 @@ div.tile {
 
   .tile-type {
     height: 100%;
+
+    &.hideTile {
+      visibility: hidden;
+    }
   }
 
   .tile- {
@@ -153,11 +191,12 @@ div.tile {
       &.flip {
         transform: scaleX(-1);
       }
+    }
 
-      /* &.starting {
-        background: url('../../assets/midair.gif') no-repeat center;
-        background-size: contain;
-      } */
+    &P {
+      background: url('../../assets/tileset.png') no-repeat;
+      background-size: 1200px;
+      background-position: -658px -376px;
     }
   }
 
@@ -208,6 +247,11 @@ div.tile {
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.3);
     color: black;
     z-index: 99;
+
+    &.small {
+      font-size: 12px;
+      max-width: 300px;
+    }
 
     p:first-child {
       white-space: nowrap;

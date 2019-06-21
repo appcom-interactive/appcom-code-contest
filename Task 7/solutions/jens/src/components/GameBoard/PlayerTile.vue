@@ -24,9 +24,9 @@ export default {
       type: Boolean,
       default: false
     },
-    outsideGameboard: {
-      type: Boolean,
-      default: true
+    pickBlock: {
+      type: String,
+      default: null
     }
   },
   data: () => ({
@@ -43,6 +43,39 @@ export default {
     ...mapGetters(['player', 'selectedWorld', 'finished', 'selectedWorld', 'reset'])
   },
   watch: {
+    async pickBlock(value) {
+      if (value && value === 'left') {
+        await this.$anime({
+          targets: this.targets,
+          translateX: this.player.x * this.size - 10,
+          translateY: this.player.y * this.size,
+          translateZ: 0,
+          scale: 1,
+          easing: 'linear',
+          duration: 400
+        }).finished;
+      } else if (value && value === 'right') {
+        await this.$anime({
+          targets: this.targets,
+          translateX: this.player.x * this.size + 10,
+          translateY: this.player.y * this.size,
+          translateZ: 0,
+          scale: 1,
+          easing: 'linear',
+          duration: 400
+        }).finished;
+      } else {
+        await this.$anime({
+          targets: this.targets,
+          translateX: this.player.x * this.size,
+          translateY: this.player.y * this.size,
+          translateZ: 0,
+          scale: 1,
+          easing: 'linear',
+          duration: 400
+        }).finished;
+      }
+    },
     finished(value) {
       setTimeout(async () => {
         this.resetFunction = true;
