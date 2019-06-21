@@ -3,7 +3,7 @@
     <div v-if="showFinishedModal" class="finished-wrapper">
       <div class="finished">
         <p class="headline">Das ist das Ende!</p>
-        <p>Wähle aus aus, ob du das Level neustarten oder in das nächste Level springen möchtest.</p>
+        <p>Level wiederholen oder neues Level starten?</p>
         <div>
           <button @click="restart">Level neustarten</button>
           <div class="spacer">&nbsp;</div>

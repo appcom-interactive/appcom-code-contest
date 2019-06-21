@@ -70,7 +70,7 @@ div.goal {
     &:before {
       content: '';
       position: absolute;
-      background: black;
+      background: rgba(0, 0, 0, 0.9);
       border-radius: 50%;
       width: 70%;
       height: 70%;
