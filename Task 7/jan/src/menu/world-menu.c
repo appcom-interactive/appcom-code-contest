@@ -2,6 +2,8 @@
 #include "main-menu.h"
 #include "../game/game.h"
 
+#define WORLD_MENU_BACK 99
+
 int worldCmpFn(void* data, void* compareArg) {
   MapEntry* entry = (MapEntry*)data;
   int key = *((int*)entry->key);

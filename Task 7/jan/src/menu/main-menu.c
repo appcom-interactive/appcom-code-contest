@@ -1,6 +1,9 @@
 #include "main-menu.h"
 #include "world-menu.h"
 
+#define MAIN_MENU_START 0
+#define MAIN_MENU_EXIT 1
+
 void freeEntry(void* entry) {
   MenuEntry* e = (MenuEntry*)entry;
   free(e);
