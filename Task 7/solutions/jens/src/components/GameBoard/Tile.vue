@@ -197,6 +197,8 @@ div.tile {
       background: url('../../assets/tileset.png') no-repeat;
       background-size: 1200px;
       background-position: -658px -376px;
+      margin-top: 3px;
+      z-index: inherit;
     }
   }
 

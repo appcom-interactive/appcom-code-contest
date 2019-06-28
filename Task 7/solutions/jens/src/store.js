@@ -6,11 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     debug: {
-      collisionTracking: true,
+      collisionTracking: false,
       showTileIDs: false,
       showCoordinates: false
     },
-    worldId: 'FlatWorld',
+    worldId: 'PickBlocks',
     worlds: [],
     shiftLeft: 0,
     finished: false,

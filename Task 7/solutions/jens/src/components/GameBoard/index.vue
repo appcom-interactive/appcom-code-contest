@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="world-center-wrapper">
     <div
       class="row"
@@ -18,7 +18,7 @@
             :highlightAllowed="highlightInformation(row, col).allowed"
             :tileSpecificClasses="tileSpecificClasses(row, col)"
             :showTutorial="showTutorial"
-            :hideTile="moveTile.y - 1 === col && moveTile.x + 1 === row"
+            :hideTile="moveTile.y === row && moveTile.x === col"
           />
         </div>
       </template>
@@ -294,6 +294,8 @@ export default {
           row[old.x] = '0';
           rowNew[old.x] = 'S';
 
+          console.log('moving player upwards');
+
           this.$set(this.copiedWorld, old.y, row);
           this.$set(this.copiedWorld, newPos.y, rowNew);
         }
@@ -306,10 +308,6 @@ export default {
           }
 
           const row = this.copiedWorld[newPos.y].slice(0);
-          row[old.x] = '0';
-          row[newPos.x] = 'S';
-
-          this.$set(this.copiedWorld, newPos.y, row);
 
           if (row[newPos.x - 1] === 'P' && !this.pickBlock) {
             this.setMessage('Den Block links von dir kannst du bewegen ;)');
@@ -319,13 +317,28 @@ export default {
 
           if (this.pickBlock) {
             if (this.pickBlock === 'left') {
-              // TODO: Move moveable tile to the left
-              // row[newPos.x - 1] = '0';
-              // row[newPos.x - 2] = 'P';
-              // this.$set(this.copiedWorld, newPos.y, row);
-              // } else {
+              console.log('moving block to the left');
+
+              row[newPos.x] = '0';
+              row[newPos.x - 1] = 'P';
+
+              this.moveTile.x = newPos.x;
+              this.moveTile.y = newPos.y + 1;
+            } else if (this.pickBlock === 'right') {
+              console.log('moving block to the left');
+
+              row[newPos.x] = '0';
+              row[newPos.x + 1] = 'P';
+
+              this.moveTile.x = newPos.x;
+              this.moveTile.y = newPos.y + 1;
             }
           }
+
+          row[old.x] = '0';
+          row[newPos.x] = 'S';
+
+          this.$set(this.copiedWorld, newPos.y, row);
         }
 
         this.pullPlayer();
@@ -345,6 +358,10 @@ export default {
     },
     canMove(newPos) {
       const allowedEntities = ['X', '0'];
+
+      if (this.pickBlock) {
+        allowedEntities.push('P');
+      }
 
       const entity = this.getValue(newPos.y + 1, newPos.x + 1);
 
@@ -404,6 +421,7 @@ export default {
 <style lang="scss" scoped>
 div.world-center-wrapper {
   position: relative;
+  z-index: 2;
   display: inline-block;
   left: 50%;
   transform: translateX(-50%);

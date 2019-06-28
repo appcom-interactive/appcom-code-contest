@@ -24,10 +24,12 @@ export default {
 <style lang="scss" scoped>
 div.moveable-tile {
   position: absolute;
+  margin-top: 3px;
   height: 62px;
   width: 62px;
   background: url('../../assets/tileset.png') no-repeat;
   background-size: 1200px;
   background-position: -658px -376px;
+  z-index: 1;
 }
 </style>
